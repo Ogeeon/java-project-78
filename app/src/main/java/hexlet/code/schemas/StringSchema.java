@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringSchema {
+public class StringSchema extends BaseSchema<String> {
     private boolean isRequired = false;
     private Integer minLength;
     private List<String> contentRestrictions = new ArrayList<>();
