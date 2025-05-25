@@ -34,8 +34,8 @@ public class NumberSchema extends BaseSchema<Number> {
             return false;
         }
         if (min != null) {
-            return !(input.doubleValue() < min.doubleValue())
-                    && !(input.doubleValue() > max.doubleValue());
+            return input.doubleValue() >= min.doubleValue()
+                    && input.doubleValue() <= max.doubleValue();
         }
         return true;
     }

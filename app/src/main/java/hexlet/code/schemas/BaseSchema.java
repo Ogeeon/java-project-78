@@ -1,7 +1,5 @@
 package hexlet.code.schemas;
 
-public class BaseSchema<T> {
-    public boolean isValid(T input) {
-        return true;
-    }
+public abstract class BaseSchema<T> {
+    public abstract boolean isValid(T input);
 }

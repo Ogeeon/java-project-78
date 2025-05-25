@@ -23,6 +23,7 @@ public class StringSchema extends BaseSchema<String> {
         return this;
     }
 
+    @Override
     public boolean isValid(String input) {
         if (isRequired && (input == null || input.isEmpty())) {
             return false;
