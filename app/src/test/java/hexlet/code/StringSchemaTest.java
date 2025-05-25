@@ -1,0 +1,55 @@
+package hexlet.code;
+
+import hexlet.code.schemas.StringSchema;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class StringSchemaTest {
+    StringSchema schema;
+    @BeforeEach
+    void prepValidator() {
+        var v = new Validator();
+        schema = v.string();
+    }
+
+    @Test
+    void testRequired() {
+        assertTrue(schema.isValid(""));
+        assertTrue(schema.isValid(null));
+        schema.required();
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(""));
+    }
+
+    @Test
+    void testMinLength() {
+        assertTrue(schema.isValid("a"));
+        schema.minLength(2);
+        assertFalse(schema.isValid("a"));
+        assertTrue(schema.isValid("ab"));
+    }
+
+    @Test
+    void testContains() {
+        schema.contains("abc");
+        assertTrue(schema.isValid("abc"));
+        assertFalse(schema.isValid("acb"));
+        schema.contains("de");
+        assertTrue(schema.isValid("abcdef"));
+        assertFalse(schema.isValid("abc"));
+    }
+
+    @Test
+    void testChain() {
+        schema.required().minLength(3).minLength(5);
+        assertTrue(schema.isValid("abcdef"));
+        assertFalse(schema.isValid("abc"));
+        schema.contains("abc").contains("de");
+        assertTrue(schema.isValid("abcdef"));
+        assertFalse(schema.isValid("abc"));
+        assertFalse(schema.isValid("abc123"));
+    }
+}
