@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class NumberSchemaTest {
-    NumberSchema schema;
+    private NumberSchema schema;
     @BeforeEach
     void prepValidator() {
         var v = new Validator();
@@ -44,5 +44,22 @@ class NumberSchemaTest {
         assertFalse(schema.isValid(0));
         assertTrue(schema.isValid(10));
         assertThrows(IllegalArgumentException.class, () -> schema.range(10, 8));
+    }
+
+    @Test
+    void testRange2() {
+        schema.range(5, 5);
+        assertTrue(schema.isValid(5));
+        assertFalse(schema.isValid(0));
+        assertFalse(schema.isValid(10));
+    }
+
+    @Test
+    void testRange3() {
+        schema.range(-15, 0);
+        assertFalse(schema.isValid(-20));
+        assertFalse(schema.isValid(20));
+        assertTrue(schema.isValid(-15));
+        assertTrue(schema.isValid(0));
     }
 }
