@@ -12,7 +12,6 @@ public final class NumberSchema extends BaseSchema<Number> {
     }
 
     public NumberSchema positive() {
-        this.isRequired = true;
         this.isPositive = true;
         return this;
     }

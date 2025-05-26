@@ -29,7 +29,7 @@ class NumberSchemaTest {
         assertTrue(schema.isValid(10));
         assertTrue(schema.isValid(-1));
         schema.positive();
-        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(null));
         assertFalse(schema.isValid(0));
         assertTrue(schema.isValid(10));
         assertFalse(schema.isValid(-1));
