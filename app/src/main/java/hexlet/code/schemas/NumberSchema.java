@@ -12,6 +12,7 @@ public class NumberSchema extends BaseSchema<Number> {
     }
 
     public NumberSchema positive() {
+        this.isRequired = true;
         this.isPositive = true;
         return this;
     }
@@ -20,6 +21,7 @@ public class NumberSchema extends BaseSchema<Number> {
         if (low.doubleValue() > high.doubleValue()) {
             throw new IllegalArgumentException("Range lower bound cannot be greater than higher bound");
         }
+        this.isRequired = true;
         this.min = low;
         this.max = high;
         return this;
@@ -27,8 +29,8 @@ public class NumberSchema extends BaseSchema<Number> {
 
     @Override
     public boolean isValid(Number input) {
-        if (isRequired && input == null) {
-            return false;
+        if (input == null) {
+            return !isRequired;
         }
         if (isPositive && input.doubleValue() <= 0) {
             return false;
