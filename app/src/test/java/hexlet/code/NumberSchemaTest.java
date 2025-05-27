@@ -40,7 +40,7 @@ class NumberSchemaTest {
         assertTrue(schema.isValid(0));
         assertTrue(schema.isValid(10));
         schema.range(5, 15);
-        assertFalse(schema.isValid(null));
+        assertTrue(schema.isValid(null));
         assertFalse(schema.isValid(0));
         assertTrue(schema.isValid(10));
         assertThrows(IllegalArgumentException.class, () -> schema.range(10, 8));

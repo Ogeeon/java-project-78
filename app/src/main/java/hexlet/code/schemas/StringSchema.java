@@ -8,6 +8,23 @@ public final class StringSchema extends BaseSchema<String> {
     private Integer minLength;
     private List<String> contentRestrictions = new ArrayList<>();
 
+    public StringSchema() {
+        checks = new ArrayList<>();
+        checks.add(input -> !((input == null || input.isEmpty()) && isRequired));
+        checks.add(input -> input == null || !(minLength != null && input.length() < minLength));
+        checks.add(input -> {
+            if (input == null) {
+                return true;
+            }
+            for (String r: contentRestrictions) {
+                if (!input.contains(r)) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+
     public StringSchema required() {
         this.isRequired = true;
         return this;
@@ -21,21 +38,5 @@ public final class StringSchema extends BaseSchema<String> {
     public StringSchema contains(String s) {
         contentRestrictions.add(s);
         return this;
-    }
-
-    @Override
-    public boolean isValid(String input) {
-        if (isRequired && (input == null || input.isEmpty())) {
-            return false;
-        }
-        if (minLength != null && input.length() < minLength) {
-            return false;
-        }
-        for (String r: contentRestrictions) {
-            if (!input.contains(r)) {
-                return false;
-            }
-        }
-        return true;
     }
 }
