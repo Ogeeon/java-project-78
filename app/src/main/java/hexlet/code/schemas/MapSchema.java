@@ -3,6 +3,7 @@ package hexlet.code.schemas;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema<Map> {
     private boolean isRequired = false;
@@ -10,7 +11,7 @@ public final class MapSchema extends BaseSchema<Map> {
     private Map<String, BaseSchema<String>> rules;
 
     public MapSchema() {
-        checks = new ArrayList<>();
+        var checks = new ArrayList<Predicate<Map>>();
         checks.add(input -> !(input == null && isRequired));
         checks.add(input -> input == null || !(minSize > 0 && input.size() < minSize));
         checks.add(input -> {
@@ -28,6 +29,7 @@ public final class MapSchema extends BaseSchema<Map> {
             }
             return true;
         });
+        super.setChecks(checks);
     }
 
     public MapSchema required() {

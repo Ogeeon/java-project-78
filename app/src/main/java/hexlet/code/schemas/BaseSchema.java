@@ -1,12 +1,17 @@
 package hexlet.code.schemas;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.function.Predicate;
 
 public class BaseSchema<T> {
-    List<Predicate<T>> checks;
+    @Getter
+    @Setter
+    private List<Predicate<T>> checks;
 
-    public boolean isValid(T input) {
+    public final boolean isValid(T input) {
         for (Predicate<T> check: checks) {
             if (!check.test(input)) {
                 return false;
