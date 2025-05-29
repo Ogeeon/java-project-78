@@ -27,6 +27,9 @@ public class BaseSchema<T> {
         if (input == null) {
             return !isRequired;
         }
+        if (checks == null) {
+            return true;
+        }
         for (Predicate<T> check: checks) {
             if (!check.test(input)) {
                 return false;
