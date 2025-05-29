@@ -51,5 +51,8 @@ class StringSchemaTest {
         assertTrue(schema.isValid("abcdef"));
         assertFalse(schema.isValid("abc"));
         assertFalse(schema.isValid("abc123"));
+        schema.contains("X");
+        assertFalse(schema.isValid("VWXYZ"));
+        assertTrue(schema.isValid("Xdeabc"));
     }
 }
