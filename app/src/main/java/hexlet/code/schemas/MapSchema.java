@@ -1,21 +1,16 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public final class MapSchema extends BaseSchema<Map> {
-    private boolean isRequired = false;
     private int minSize = 0;
     private Map<String, BaseSchema<String>> rules;
 
     public MapSchema() {
-        var checks = new ArrayList<Predicate<Map>>();
-        checks.add(input -> !(input == null && isRequired));
-        checks.add(input -> input == null || !(minSize > 0 && input.size() < minSize));
-        checks.add(input -> {
-            if (input == null || rules == null) {
+        super.addCheck(input -> !(minSize > 0 && input.size() < minSize));
+        super.addCheck(input -> {
+            if (rules == null) {
                 return true;
             }
             Set<String> keySet = rules.keySet();
@@ -29,11 +24,10 @@ public final class MapSchema extends BaseSchema<Map> {
             }
             return true;
         });
-        super.setChecks(checks);
     }
 
     public MapSchema required() {
-        this.isRequired = true;
+        super.setRequired();
         return this;
     }
 

@@ -2,18 +2,15 @@ package hexlet.code.schemas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public final class StringSchema extends BaseSchema<String> {
-    private boolean isRequired = false;
     private Integer minLength;
     private List<String> contentRestrictions = new ArrayList<>();
 
     public StringSchema() {
-        var checks = new ArrayList<Predicate<String>>();
-        checks.add(input -> !((input == null || input.isEmpty()) && isRequired));
-        checks.add(input -> input == null || !(minLength != null && input.length() < minLength));
-        checks.add(input -> {
+        super.addCheck(input -> !(super.isRequired() && input.isEmpty()));
+        super.addCheck(input -> !(minLength != null && input.length() < minLength));
+        super.addCheck(input -> {
             if (input == null) {
                 return true;
             }
@@ -24,11 +21,10 @@ public final class StringSchema extends BaseSchema<String> {
             }
             return true;
         });
-        super.setChecks(checks);
     }
 
     public StringSchema required() {
-        this.isRequired = true;
+        super.setRequired();
         return this;
     }
 
