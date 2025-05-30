@@ -31,10 +31,14 @@ class MapSchemaTest {
     void testSizeOf() {
         var data = new HashMap<String, String>();
         data.put("key1", "value1");
+        data.put("key2", "value2");
+        assertTrue(schema.isValid(data));
+        schema.sizeof(3);
+        assertFalse(schema.isValid(data));
+        data.put("key3", "value3");
         assertTrue(schema.isValid(data));
         schema.sizeof(2);
-        assertFalse(schema.isValid(data));
-        data.put("key2", "value2");
+        data.remove("key3");
         assertTrue(schema.isValid(data));
     }
 

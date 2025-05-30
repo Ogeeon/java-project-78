@@ -44,15 +44,15 @@ class StringSchemaTest {
 
     @Test
     void testChain() {
-        schema.required().minLength(3).minLength(5);
+        schema.required().minLength(10).minLength(6);
         assertTrue(schema.isValid("abcdef"));
         assertFalse(schema.isValid("abc"));
         schema.contains("abc").contains("de");
         assertTrue(schema.isValid("abcdef"));
         assertFalse(schema.isValid("abc"));
         assertFalse(schema.isValid("abc123"));
-        schema.contains("X");
-        assertFalse(schema.isValid("VWXYZ"));
-        assertTrue(schema.isValid("Xdeabc"));
+        schema.minLength(7).contains("X");
+        assertFalse(schema.isValid("TUVWXYZ"));
+        assertTrue(schema.isValid("qXdeabc"));
     }
 }

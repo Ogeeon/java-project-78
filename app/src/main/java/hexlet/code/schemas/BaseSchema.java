@@ -23,6 +23,13 @@ public class BaseSchema<T> {
         checks.add(check);
     }
 
+    public final void replaceCheck(Predicate<T> oldCheck, Predicate<T> newCheck) {
+        if (checks != null) {
+            checks.remove(oldCheck);
+        }
+        addCheck(newCheck);
+    }
+
     public final boolean isValid(T input) {
         if (input == null) {
             return !isRequired;

@@ -2,15 +2,19 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
-public final class MapSchema extends BaseSchema<Map> {
+public final class MapSchema extends BaseSchema<Map<?, ?>> {
+    private Predicate<Map<?, ?>> sizeCheck;
     public MapSchema required() {
         super.setRequired();
         return this;
     }
 
     public MapSchema sizeof(int size) {
-        super.addCheck(input -> input.size() >= size);
+        Predicate<Map<?, ?>> newCheck = input -> input.size() >= size;
+        super.replaceCheck(sizeCheck, newCheck);
+        sizeCheck = newCheck;
         return this;
     }
 
