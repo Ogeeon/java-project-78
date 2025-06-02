@@ -6,19 +6,17 @@ public final class StringSchema extends BaseSchema<String> {
     private Predicate<String> sizeCheck;
     public StringSchema required() {
         super.setRequired();
-        super.addCheck(input -> !(super.isRequired() && input.isEmpty()));
+        super.addCheck("emptiness", input -> !input.isEmpty());
         return this;
     }
 
     public StringSchema minLength(int length) {
-        Predicate<String> newCheck = input -> input.length() >= length;
-        super.replaceCheck(sizeCheck, newCheck);
-        sizeCheck = newCheck;
+        super.addCheck("minLength", input -> input.length() >= length);
         return this;
     }
 
     public StringSchema contains(String s) {
-        super.addCheck(input -> input.contains(s));
+        super.addCheck("contains", input -> input.contains(s));
         return this;
     }
 }

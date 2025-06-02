@@ -7,7 +7,7 @@ public final class NumberSchema extends BaseSchema<Number> {
     }
 
     public NumberSchema positive() {
-        super.addCheck(input -> input.doubleValue() > 0);
+        super.addCheck("positive", input -> input.doubleValue() > 0);
         return this;
     }
 
@@ -18,7 +18,8 @@ public final class NumberSchema extends BaseSchema<Number> {
         if (low.doubleValue() > high.doubleValue()) {
             throw new IllegalArgumentException("Range lower bound cannot be greater than higher bound");
         }
-        super.addCheck(input -> input.doubleValue() >= low.doubleValue() && input.doubleValue() <= high.doubleValue());
+        super.addCheck("range", input -> input.doubleValue() >= low.doubleValue()
+                && input.doubleValue() <= high.doubleValue());
         return this;
     }
 

@@ -27,7 +27,7 @@ class StringSchemaTest {
     @Test
     void testMinLength() {
         assertTrue(schema.isValid("a"));
-        schema.minLength(2);
+        schema.minLength(5).minLength(2);
         assertFalse(schema.isValid("a"));
         assertTrue(schema.isValid("ab"));
     }
@@ -38,7 +38,7 @@ class StringSchemaTest {
         assertTrue(schema.isValid("abc"));
         assertFalse(schema.isValid("acb"));
         schema.contains("de");
-        assertTrue(schema.isValid("abcdef"));
+        assertTrue(schema.isValid("def"));
         assertFalse(schema.isValid("abc"));
     }
 
@@ -50,9 +50,8 @@ class StringSchemaTest {
         schema.contains("abc").contains("de");
         assertTrue(schema.isValid("abcdef"));
         assertFalse(schema.isValid("abc"));
-        assertFalse(schema.isValid("abc123"));
         schema.minLength(7).contains("X");
-        assertFalse(schema.isValid("TUVWXYZ"));
-        assertTrue(schema.isValid("qXdeabc"));
+        assertFalse(schema.isValid("UVWXYZ"));
+        assertTrue(schema.isValid(".Xdeabc"));
     }
 }
