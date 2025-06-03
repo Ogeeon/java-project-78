@@ -6,7 +6,6 @@ import java.util.Set;
 public final class MapSchema extends BaseSchema<Map<?, ?>> {
     public MapSchema required() {
         super.setRequired();
-        super.addCheck("emptiness", input -> !input.isEmpty());
         return this;
     }
 

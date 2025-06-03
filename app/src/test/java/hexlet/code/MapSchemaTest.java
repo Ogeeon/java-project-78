@@ -26,7 +26,7 @@ class MapSchemaTest {
         assertTrue(schema.isValid(new HashMap<String, String>()));
         schema.required();
         assertFalse(schema.isValid(null));
-        assertFalse(schema.isValid(new HashMap<String, String>()));
+        assertTrue(schema.isValid(new HashMap<String, String>()));
     }
 
     @Test
