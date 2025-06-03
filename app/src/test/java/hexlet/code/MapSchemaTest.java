@@ -23,8 +23,10 @@ class MapSchemaTest {
     @Test
     void testRequired() {
         assertTrue(schema.isValid(null));
+        assertTrue(schema.isValid(new HashMap<String, String>()));
         schema.required();
         assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(new HashMap<String, String>()));
     }
 
     @Test
